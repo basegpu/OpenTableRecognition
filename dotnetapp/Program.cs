@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Text;
-using OpenTableRegonition;
+using OpenTableRecognition;
 using static System.Console;
 
 public static class Program
@@ -14,6 +14,12 @@ public static class Program
             try
             {
                 var reader = new ImageReader(args[0]);
+                var bitmap = reader.GetBinaryBitmap(0.5f);
+                var descriptor = new BitmapDescriptor<bool>(bitmap);
+                foreach (var v in descriptor.ColumnHistogram)
+                {
+                    Console.WriteLine($"{v}");
+                }
             }
             catch (Exception e)
             {

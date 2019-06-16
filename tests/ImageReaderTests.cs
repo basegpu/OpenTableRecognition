@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using OpenTableRegonition;
+using OpenTableRecognition;
 using SixLabors.ImageSharp;
 
 namespace Tests

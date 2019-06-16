@@ -4,7 +4,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace OpenTableRegonition
+namespace OpenTableRecognition
 {
     public class ImageReader : IDisposable
     {
@@ -50,30 +50,18 @@ namespace OpenTableRegonition
             return img;
         }
 
-        //public bool[,] GetImageBinary(flo )
-        //{
-        //    return GetImageBinary(GetImageGrayscale());
-        //}
-
-        ///// <summary>
-        ///// First dimension is height, second is width
-        ///// </summary>
-        ///// <param name="image"></param>
-        ///// <returns></returns>
-        //public static bool[,] GetImageBinary(Image<Rgba32> image)
-        //{
-        //    image.Mutate(x => x.BinaryThreshold(0.3f));
-        //    foreach()
-        //    var result = new bool[image.Height, image.Width];
-        //    for (int h = 0; h < image.Height; h++)
-        //    {
-        //        for (int w = 0; w < image.Width; w++)
-        //        {
-        //          //  image.GetPixel(h, w);
-
-        //        }
-        //    }
-        //    return result;
-        //}
+        public bool[,] GetBinaryBitmap(float threshold)
+        {
+           var image = GetImageBlackWhite(threshold);
+           var bitmap = new bool[image.Height, image.Width];
+           for (int h = 0; h < image.Height; h++)
+           {
+               for (int w = 0; w < image.Width; w++)
+               {
+                    bitmap[h, w] = image[h, w].R < 128 ? true : false;
+               }
+           }
+           return bitmap;
+        }
     }
 }

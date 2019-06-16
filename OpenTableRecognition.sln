@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageReader", "ImageReader\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetapp", "dotnetapp\dotnetapp.csproj", "{4D426C96-36F7-493D-B366-383718B13187}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4D426C96-36F7-493D-B366-383718B13187}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D426C96-36F7-493D-B366-383718B13187}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D426C96-36F7-493D-B366-383718B13187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

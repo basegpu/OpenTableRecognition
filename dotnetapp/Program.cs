@@ -9,7 +9,7 @@ public static class Program
 {
     public static void Main(string[] args) 
     {
-          var reader = new ImageReader();
+          var reader = new ImageReader("");
           Console.WriteLine("Hello OpenTableRegonition");
     }
 }

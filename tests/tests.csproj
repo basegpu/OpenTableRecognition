@@ -14,4 +14,10 @@
     <ProjectReference Include="..\ImageReader\ImageReader.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="images\receipt.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

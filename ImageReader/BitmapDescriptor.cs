@@ -9,12 +9,14 @@ namespace OpenTableRecognition
     {
 
         private readonly T[,] _img;
-        public float[] RowHistogram
+        public readonly int nRows;
+        public readonly int nColumns;
+        public double[] RowHistogram
         {
             get;
             private set;
         }
-        public float[] ColumnHistogram
+        public double[] ColumnHistogram
         {
             get;
             private set;
@@ -23,13 +25,23 @@ namespace OpenTableRecognition
         public BitmapDescriptor(T[,] bitmap)
         {
             _img = bitmap;
+            nRows = _img.GetLength(0);
+            nColumns = _img.GetLength(1);
             CalcHistogrmas();
         }
 
         private void CalcHistogrmas()
         {
-            RowHistogram = new float[_img.GetLength(0)];
-            ColumnHistogram = new float[_img.GetLength(1)];
+            RowHistogram = new double[nRows];
+            ColumnHistogram = new double[nColumns];
+            for (int ri = 0; ri < nRows; ri++)
+            {
+                for (int ci = 0; ci < nColumns; ci++)
+                {
+                    RowHistogram[ri] += Convert.ToDouble(_img[ri, ci]);
+                    ColumnHistogram[ci] += Convert.ToDouble(_img[ri, ci]);
+                }
+            }
         }
     }
 }

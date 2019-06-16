@@ -9,7 +9,7 @@ namespace Tests
         [Fact]
         public void PrintStringWithColor()
         {
-            var reader = new ImageReader();
+            var reader = new ImageReader("images/receipt.jpg");
             Assert.True(1 == 1, "dummy Test.");
         }
     }

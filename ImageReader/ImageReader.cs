@@ -31,6 +31,20 @@ namespace OpenTableRegonition
             return img;
         }
 
+        public Image<Rgba32> GetImageBlackWhite()
+        {
+            var img = GetImage();
+            img.Mutate(x => x.BlackWhite());
+            return img;
+        }
+
+        public Image<Rgba32> GetImageBlackWhite(float treshold)
+        {
+            var img = GetImage();
+            img.Mutate(x => x.BlackWhite().BinaryThreshold(treshold));
+            return img;
+        }
+
         //public bool[,] GetImageBinary(flo )
         //{
         //    return GetImageBinary(GetImageGrayscale());
@@ -51,7 +65,7 @@ namespace OpenTableRegonition
         //        for (int w = 0; w < image.Width; w++)
         //        {
         //          //  image.GetPixel(h, w);
-                    
+
         //        }
         //    }
         //    return result;

@@ -61,5 +61,10 @@ namespace OpenTableRegonition
             g.Dispose();
             return newBitmap;
         }
+
+        public bool[][] GetImageBinary()
+        {
+            return default(bool[][]);
+        }
     }
 }

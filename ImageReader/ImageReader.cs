@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -11,6 +12,10 @@ namespace OpenTableRegonition
 
         public ImageReader(string path)
         {
+            if (!File.Exists(path))
+            {
+                throw new ArgumentException($"File {path} does not exist.");
+            }
             _path = path;
         }
 

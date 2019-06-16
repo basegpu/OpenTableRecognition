@@ -8,10 +8,10 @@ namespace Tests
     public class ImageReaderTests
     {
         [Fact]
-        public void PrintStringWithColor()
+        public void WrongFile()
         {
-            var reader = new ImageReader("images/receipt.jpg");
-            Assert.True(1 == 1, "dummy Test.");
+            Action act = () => new ImageReader("images/dummy.png");
+            Assert.Throws<ArgumentException>(act);
         }
 
         [Fact]

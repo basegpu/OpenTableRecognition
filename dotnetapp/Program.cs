@@ -9,8 +9,16 @@ public static class Program
 {
     public static void Main(string[] args) 
     {
-
-          var reader = new ImageReader("");
-          Console.WriteLine("Hello OpenTableRegonition");
+        if (args.Length == 1)
+        {
+            try
+            {
+                var reader = new ImageReader(args[0]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

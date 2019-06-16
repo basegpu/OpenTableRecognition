@@ -34,13 +34,26 @@ namespace OpenTableRecognition
         {
             RowHistogram = new double[nRows];
             ColumnHistogram = new double[nColumns];
+            double sum = 0.0;
+            double v;
             for (int ri = 0; ri < nRows; ri++)
             {
                 for (int ci = 0; ci < nColumns; ci++)
                 {
-                    RowHistogram[ri] += Convert.ToDouble(_img[ri, ci]);
-                    ColumnHistogram[ci] += Convert.ToDouble(_img[ri, ci]);
+                    v = Convert.ToDouble(_img[ri, ci]);
+                    sum += v;
+                    RowHistogram[ri] += v;
+                    ColumnHistogram[ci] += v;
                 }
+            }
+            double invSum = 1.0 / sum;
+            for (int ri = 0; ri < nRows; ri++)
+            {
+                RowHistogram[ri] *= invSum;
+            }
+            for (int ci = 0; ci < nColumns; ci++)
+            {
+                ColumnHistogram[ci] *= invSum;
             }
         }
     }

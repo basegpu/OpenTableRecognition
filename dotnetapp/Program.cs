@@ -16,7 +16,7 @@ public static class Program
                 var reader = new ImageReader(args[0]);
                 var bitmap = reader.GetBinaryBitmap(0.5f);
                 var descriptor = new BitmapDescriptor<bool>(bitmap);
-                foreach (var v in descriptor.ColumnHistogram)
+                foreach (var v in descriptor.RowHistogram)
                 {
                     Console.WriteLine($"{v}");
                 }

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\utils\utils.csproj" />
+    <ProjectReference Include="..\ImageReader\ImageReader.csproj" />
   </ItemGroup>
 
 </Project>

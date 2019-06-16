@@ -3,14 +3,14 @@ WORKDIR /app
 
 # copy csproj and restore as distinct layers
 COPY dotnetapp/*.csproj ./dotnetapp/
-COPY utils/*.csproj ./utils/
+COPY ImageReader/*.csproj ./ImageReader/
 WORKDIR /app/dotnetapp
 RUN dotnet restore
 
 # copy and publish app and libraries
 WORKDIR /app/
 COPY dotnetapp/. ./dotnetapp/
-COPY utils/. ./utils/
+COPY ImageReader/. ./ImageReader/
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 

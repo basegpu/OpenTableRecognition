@@ -1,19 +1,18 @@
 using System;
 using Xunit;
-using System.Drawing;
-using OpenTableRegonition;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
+using OpenTableRecognition;
 
 namespace Tests
 {
     public class BitmapDescriptorTests
     {
         [Fact]
-        public void SimpleBitmap()
+        public void EmptyBitmap()
         {
-        	var bitmap = new Image<Rgba32>(5, 5);
-            Assert.True(1 == 1, "dummy Test.");
+        	var bitmap = new bool[,]{};
+        	var descriptor = new BitmapDescriptor<bool>(bitmap);
+            Assert.Equal(0, (int)descriptor.RowHistogram.Length);
+            Assert.Equal(0, (int)descriptor.ColumnHistogram.Length);
         }
     }
 }

@@ -1,32 +1,35 @@
 ﻿using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
 
 namespace OpenTableRecognition
 {
-    public class BitmapDescriptor
+    public class BitmapDescriptor<T>
     {
 
-        private readonly IImage _img;
-        private short[] _rowHistogram = default(short[]);
-        private short[] _columnHistogram = default(short[]);
+        private readonly T[,] _img;
+        public float[] RowHistogram
+        {
+            get;
+            private set;
+        }
+        public float[] ColumnHistogram
+        {
+            get;
+            private set;
+        }
 
-        public BitmapDescriptor(IImage bitmap)
+        public BitmapDescriptor(T[,] bitmap)
         {
             _img = bitmap;
+            CalcHistogrmas();
         }
 
-        public short[] GetRowHistogram()
+        private void CalcHistogrmas()
         {
-            return _rowHistogram;
+            RowHistogram = new float[_img.GetLength(0)];
+            ColumnHistogram = new float[_img.GetLength(1)];
         }
-
-        public short[] GetColumnHistogram()
-        {
-            return _columnHistogram;
-        }
-
     }
 }

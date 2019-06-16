@@ -13,7 +13,6 @@ namespace OpenTableRegonition
             _path = path;
         }
 
-
         public void Dispose()
         {
             

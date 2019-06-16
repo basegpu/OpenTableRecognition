@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace OpenTableRegonition
 {
@@ -19,52 +20,39 @@ namespace OpenTableRegonition
             
         }
 
-        public Bitmap GetImage()
+        public Image<Rgba32> GetImage()
         {
-            var img = Bitmap.FromFile(_path);
-            return new Bitmap(img);
+            return Image.Load(_path);
         }
 
-        public Bitmap GetImageGrayscale()
+        public Image<Rgba32> GetImageGrayscale()
         {
-            //https://web.archive.org/web/20110827032809/http://www.switchonthecode.com/tutorials/csharp-tutorial-convert-a-color-image-to-grayscale
-            //create a blank bitmap the same size as original
-            var img = Bitmap.FromFile(_path);
-            Bitmap newBitmap = new Bitmap(img.Width, img.Height);
-
-            //get a graphics object from the new image
-            Graphics g = Graphics.FromImage(newBitmap);
-
-            //create the grayscale ColorMatrix
-            ColorMatrix colorMatrix = new ColorMatrix(
-               new float[][]
-               {
-                 new float[] {.3f, .3f, .3f, 0, 0},
-                 new float[] {.59f, .59f, .59f, 0, 0},
-                 new float[] {.11f, .11f, .11f, 0, 0},
-                 new float[] {0, 0, 0, 1, 0},
-                 new float[] {0, 0, 0, 0, 1}
-               });
-
-            //create some image attributes
-            ImageAttributes attributes = new ImageAttributes();
-
-            //set the color matrix attribute
-            attributes.SetColorMatrix(colorMatrix);
-
-            //draw the original image on the new image
-            //using the grayscale color matrix
-            g.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height),
-               0, 0, img.Width, img.Height, GraphicsUnit.Pixel, attributes);
-
-            //dispose the Graphics object
-            g.Dispose();
-            return newBitmap;
+            var img = GetImage();
+            return img;
         }
 
-        public bool[][] GetImageBinary()
+        public bool[,] GetImageBinary()
         {
-            return default(bool[][]);
+            return GetGrayscaleImageBinary(GetImageGrayscale());
+        }
+
+        /// <summary>
+        /// First dimension is height, second is width
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static bool[,] GetGrayscaleImageBinary(Image<Rgba32> image)
+        {
+            var result = new bool[image.Height, image.Width];
+            for (int h = 0; h < image.Height; h++)
+            {
+                for (int w = 0; w < image.Width; w++)
+                {
+                  //  image.GetPixel(h, w);
+                    
+                }
+            }
+            return result;
         }
     }
 }

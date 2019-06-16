@@ -23,13 +23,13 @@ namespace Tests
         }
 
         [Fact]
-        public void TestReadWriteGrayscale()
+        public void TestReadGrayscale()
         {
             var imgReader = new ImageReader("images/receipt.jpg");
             var img = imgReader.GetImageGrayscale();
             Assert.True(img.Width == 2378);
             Assert.True(img.Height == 2422);
-            img.Save("images/receiptGray.jpg");
+            
         }
     }
 }

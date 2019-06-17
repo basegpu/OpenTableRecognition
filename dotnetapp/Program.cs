@@ -14,11 +14,23 @@ public static class Program
             try
             {
                 var reader = new ImageReader(args[0]);
-                var bitmap = reader.GetBinaryBitmap(0.5f);
+                var bitmap = reader.GetBinaryBitmap(0.5f, 0.2);
                 var descriptor = new BitmapDescriptor<bool>(bitmap);
-                foreach (var v in descriptor.RowHistogram)
+                using (StreamWriter file = new StreamWriter("rows.dat"))
                 {
-                    Console.WriteLine($"{v}");
+                    foreach (var v in descriptor.RowHistogram)
+                    {
+                        file.Write(v);
+                        file.Write(Environment.NewLine);
+                    }
+                }
+                using (StreamWriter file = new StreamWriter("cols.dat"))
+                {
+                    foreach (var v in descriptor.ColumnHistogram)
+                    {
+                        file.Write(v);
+                        file.Write(Environment.NewLine);
+                    }
                 }
             }
             catch (Exception e)

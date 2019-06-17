@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Extreme.Statistics;
 
 namespace OpenTableRecognition
 {
@@ -55,6 +56,11 @@ namespace OpenTableRecognition
             {
                 ColumnHistogram[ci] *= invSum;
             }
+            // var rows = KernelDensity.Estimate(ColumnHistogram, KernelDensity.GaussianKernel);
+            // foreach (var item in rows)
+            // {
+            //     Console.WriteLine(item);
+            // }
         }
     }
 }

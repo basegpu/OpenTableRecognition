@@ -32,36 +32,42 @@ namespace OpenTableRecognition
         public Image<Rgba32> GetImageGrayscale()
         {
             var img = GetImage();
-            img.Mutate(x => x.Grayscale());
+            img.Mutate(i => i.Grayscale());
             return img;
         }
 
         public Image<Rgba32> GetImageBlackWhite()
         {
             var img = GetImage();
-            img.Mutate(x => x.BlackWhite());
+            img.Mutate(i => i.BlackWhite());
             return img;
         }
 
         public Image<Rgba32> GetImageBlackWhite(float treshold)
         {
             var img = GetImage();
-            img.Mutate(x => x.BlackWhite().BinaryThreshold(treshold));
+            img.Mutate(i => i.BlackWhite().BinaryThreshold(treshold));
             return img;
         }
 
-        public bool[,] GetBinaryBitmap(float threshold)
+        public bool[,] GetBinaryBitmap(float threshold, double scale=1.0)
         {
-           var image = GetImageBlackWhite(threshold);
-           var bitmap = new bool[image.Height, image.Width];
-           for (int h = 0; h < image.Height; h++)
-           {
-               for (int w = 0; w < image.Width; w++)
-               {
-                    bitmap[h, w] = image[h, w].R < 128 ? true : false;
-               }
-           }
-           return bitmap;
+            var image = GetImageBlackWhite(threshold);
+            if (scale != 1.0)
+            {
+                int width = (int)(image.Width * scale);
+                int height = (int)(image.Height * scale);
+                image.Mutate(i => i.Resize(width, height, true));
+            }
+            var bitmap = new bool[image.Height, image.Width];
+            for (int w = 0; w < image.Width; w++)
+            {
+                for (int h = 0; h < image.Height; h++)
+                {
+                    bitmap[h, w] = image[w, h].R < 128 ? true : false;
+                }
+            }
+            return bitmap;
         }
     }
 }

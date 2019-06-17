@@ -2,6 +2,10 @@ using System;
 using Xunit;
 using OpenTableRegonition;
 using SixLabors.ImageSharp;
+using System.Linq;
+using SixLabors.ImageSharp.PixelFormats;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tests
 {
@@ -12,6 +16,25 @@ namespace Tests
         {
             var reader = new ImageReader("images/receipt.jpg");
             Assert.True(1 == 1, "dummy Test.");
+        }
+
+        [Fact]
+        public void GetColorArray()
+        {
+            var imgReader = new ImageReader("images/receipt.jpg");
+            var img = imgReader.GetImageGrayscale();
+            var colors = ImageReader.GetColorArray(img);
+            var colorsSet = new HashSet<Rgba32>();
+            for(var i = 0; i< img.Height; i++)
+            {
+                for (int j = 0; j < img.Width; j++)
+                {
+                    colorsSet.Add((Rgba32)colors.GetValue(i, j));
+                }
+            }
+            Debug.WriteLine(string.Join(",", colorsSet.ToList()));
+            Assert.True(colorsSet.All(x => x.B == x.G && x.G == x.R));
+            
         }
 
         [Fact]

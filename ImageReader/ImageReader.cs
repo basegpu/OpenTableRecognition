@@ -1,5 +1,6 @@
 ﻿using System;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
@@ -45,10 +46,23 @@ namespace OpenTableRegonition
             return img;
         }
 
-        //public bool[,] GetImageBinary(flo )
-        //{
-        //    return GetImageBinary(GetImageGrayscale());
-        //}
+        public static Rgba32[,] GetColorArray(Image<Rgba32> image)
+        {
+            var result = new Rgba32[image.Height, image.Width];
+            int colNum = 0;
+            int rowNum = 0;
+            foreach (var pixel in image.GetPixelSpan())
+            {
+                if (colNum == image.Width)
+                {
+                    colNum = 0;
+                    rowNum++;
+                }
+                result[rowNum, colNum] = pixel;
+                colNum++;
+            }
+            return result;
+        }
 
         ///// <summary>
         ///// First dimension is height, second is width

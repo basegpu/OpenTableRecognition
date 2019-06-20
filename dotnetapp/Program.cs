@@ -32,6 +32,7 @@ public static class Program
                         file.Write(Environment.NewLine);
                     }
                 }
+                descriptor.ApplyFiltering(0.02);
             }
             catch (Exception e)
             {

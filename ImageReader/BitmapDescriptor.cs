@@ -26,6 +26,16 @@ namespace OpenTableRecognition
             get;
             private set;
         }
+        public int[] RowWindows
+        {
+            get;
+            private set;
+        }
+        public int[] ColumnWindows
+        {
+            get;
+            private set;
+        }
 
         public BitmapDescriptor(T[,] bitmap)
         {
@@ -35,11 +45,17 @@ namespace OpenTableRecognition
             CalcHistograms();
         }
 
-        public void ApplyFiltering()
+        public void ApplyFiltering(double lowpass)
         {
-            var ic = GetSortedFrequencies(ColumnHistogram, 0.02);
-            FilterByMovingAverage(ic[0]);
-            GetSortedFrequencies(RowHistogram, 0.02);
+            if (nColumns > 1)
+            {
+                ColumnWindows = GetSortedFrequencies(ColumnHistogram, lowpass);
+                //FilterByMovingAverage(ColumnHistogram, ColumnWindows[0]);
+            }
+            if (nRows > 1)
+            {
+                RowWindows = GetSortedFrequencies(RowHistogram, lowpass);
+            }
         }
 
         private void CalcHistograms()
@@ -71,31 +87,37 @@ namespace OpenTableRecognition
 
         private int[] GetSortedFrequencies(double[] data, double lowpass)
         {
+            // creating a vector of complex samples
             int lpf = (int)(data.Length * lowpass);
             Complex32[] samples = new Complex32[data.Length];
             for (int ii = 0; ii < data.Length; ii++)
             {
                 samples[ii] = new Complex32((float)data[ii], 0.0f);
             }
+            // do the FFT
             Fourier.Forward(samples, FourierOptions.NoScaling);
-            int Nf = data.Length/2 - lpf;
+            // get the first half of the frequencies
+            // - removing the very first one
+            // - removing some lowpass values
+            int Ncorr = lpf + 1;
+            int Nf = data.Length/2 - Ncorr;
             double[] freq = new Double[Nf];
             for (int ii = 0; ii < Nf; ii++)
             {
-                freq[ii] = samples[lpf+ii].Magnitude;
+                freq[ii] = samples[ii+Ncorr].Magnitude;
             }
+            // sort along the signal strength
             var sorted = freq
                 .Select((x, i) => new KeyValuePair<int, double>(i, x))
                 .OrderByDescending(x => x.Value)
                 .ToList();
-            freq = sorted.Select(x => x.Value).ToArray();
-            var idx = sorted.Select(x => x.Key + lpf).ToArray();
-            return idx;
+            // add 1 again to correct for removing first frequency
+            return sorted.Select(x => x.Key + Ncorr).ToArray();
         }
 
-        private void FilterByMovingAverage(int window)
+        private void FilterByMovingAverage(double[] data, int window)
         {
-
+            var ms = new MovingStatistics(window, data);
         }
     }
 }

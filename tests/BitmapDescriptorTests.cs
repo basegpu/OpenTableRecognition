@@ -68,6 +68,68 @@ namespace Tests
             checkHistogram(descriptor.ColumnHistogram, new double[]{1.0});
         }
 
+        [Fact]
+        public void EmptyBitmapWindows()
+        {
+            var bitmap = new bool[,]{};
+            var descriptor = new BitmapDescriptor<bool>(bitmap);
+            descriptor.ApplyFiltering(0.01);
+            Assert.Null(descriptor.RowWindows);
+            Assert.Null(descriptor.ColumnWindows);
+        }
+
+        [Fact]
+        public void BooleanWindows()
+        {
+            var bitmap = new bool[1,16]{
+                {true,true,false,false,true,true,false,false,
+                 true,true,false,false,true,true,false,false}
+            };
+            var descriptor = new BitmapDescriptor<bool>(bitmap);
+            descriptor.ApplyFiltering(0.0);
+            Assert.Equal(4, descriptor.ColumnWindows[0]);
+            Assert.Null(descriptor.RowWindows);
+        }
+
+        [Fact]
+        public void IntWindows()
+        {
+            var bitmap = new int[1,10]{
+                {3,0,3,0,3,0,3,0,3,0}
+            };
+            var descriptor = new BitmapDescriptor<int>(bitmap);
+            descriptor.ApplyFiltering(0.0);
+            Assert.Equal(2, descriptor.ColumnWindows[0]);
+            Assert.Null(descriptor.RowWindows);
+        }
+
+        [Fact]
+        public void DoubleWindows()
+        {
+            var bitmap = new double[16,10]{
+                {5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0,5.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0},
+                {1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0},
+                {3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0,3.0,0.0}
+            };
+            var descriptor = new BitmapDescriptor<double>(bitmap);
+            descriptor.ApplyFiltering(0.0);
+            Assert.Equal(2, descriptor.ColumnWindows[0]);
+            Assert.Equal(4, descriptor.RowWindows[0]);
+        }
+
         private void checkSize<T>(BitmapDescriptor<T> descriptor, int rows, int columns)
         {
             Assert.Equal(rows, descriptor.nRows);

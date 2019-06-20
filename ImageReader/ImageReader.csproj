@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
-    <PackageReference Include="Extreme.Numerics.Generic" Version="7.0.2" />
+    <PackageReference Include="MathNet.Numerics" Version="4.8.1" />
   </ItemGroup>
 </Project>

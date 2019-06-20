@@ -28,10 +28,10 @@ namespace OpenTableRecognition
             _img = bitmap;
             nRows = _img.GetLength(0);
             nColumns = _img.GetLength(1);
-            CalcHistogrmas();
+            CalcHistograms();
         }
 
-        private void CalcHistogrmas()
+        private void CalcHistograms()
         {
             RowHistogram = new double[nRows];
             ColumnHistogram = new double[nColumns];

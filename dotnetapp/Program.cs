@@ -16,6 +16,7 @@ public static class Program
                 var reader = new ImageReader(args[0]);
                 var bitmap = reader.GetBinaryBitmap(0.5f, 0.2);
                 var descriptor = new BitmapDescriptor<bool>(bitmap);
+                descriptor.ApplyFiltering(0.02);
                 using (StreamWriter file = new StreamWriter("rows.dat"))
                 {
                     foreach (var v in descriptor.RowHistogram)
@@ -32,7 +33,6 @@ public static class Program
                         file.Write(Environment.NewLine);
                     }
                 }
-                descriptor.ApplyFiltering(0.02);
             }
             catch (Exception e)
             {

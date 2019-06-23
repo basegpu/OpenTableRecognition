@@ -6,7 +6,6 @@ using System.Text;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.IntegralTransforms;
-using MathNet.Numerics.Statistics;
 
 namespace OpenTableRecognition
 {
@@ -50,11 +49,12 @@ namespace OpenTableRecognition
             if (nColumns > 1)
             {
                 ColumnWindows = GetSortedFrequencies(ColumnHistogram, lowpass);
-                //FilterByMovingAverage(ColumnHistogram, ColumnWindows[0]);
+                FilterByMovingAverage(ColumnHistogram, ColumnWindows[0]);
             }
             if (nRows > 1)
             {
                 RowWindows = GetSortedFrequencies(RowHistogram, lowpass);
+                FilterByMovingAverage(RowHistogram, RowWindows[0]);
             }
         }
 
@@ -117,7 +117,13 @@ namespace OpenTableRecognition
 
         private void FilterByMovingAverage(double[] data, int window)
         {
-            var ms = new MovingStatistics(window, data);
+            int w, s;
+            for (int ii = 0; ii < data.Length; ii++)
+            {
+                s = Math.Max(0, Math.Max(ii-window/2, 2*ii-data.Length+1));
+                w = Math.Min(window, Math.Min(ii*2+1, 2*(data.Length-ii)-1));
+                data[ii] = data.Skip(s).Take(w).Sum()/(double)w;
+            }
         }
     }
 }

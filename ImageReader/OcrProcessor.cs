@@ -27,13 +27,13 @@ namespace OpenTableRecognition
             return content;
         }
 
-        public static string GetTextIron(string path)
-        {
-            string content = string.Empty;
-            var ocr = new IronOcr.AdvancedOcr();
-            var results = ocr.ReadMultiFrameTiff(path);
-            return results.Text;
+        //public static string GetTextIron(string path)
+        //{
+        //    string content = string.Empty;
+        //    var ocr = new IronOcr.AdvancedOcr();
+        //    var results = ocr.ReadMultiFrameTiff(path);
+        //    return results.Text;
             
-        }
+        //}
     }
 }

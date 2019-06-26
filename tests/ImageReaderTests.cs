@@ -6,6 +6,7 @@ using System.Linq;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace Tests
 {
@@ -74,6 +75,47 @@ namespace Tests
             Assert.True(img.Width == 2378);
             Assert.True(img.Height == 2422);
             img.Save("images/outputBW025.jpg");
+        }
+
+        [Fact]
+        public void TestTIFConversion()
+        {
+            var imgReader = new ImageReader("images/receipt.jpg");
+            var img = ImageReader.Encode(imgReader.GetImageBlackWhite());
+
+            byte[] buffer = new byte[1024 * 64];
+            using (var file = File.OpenWrite("images/outputBW.tif"))
+            {
+                int read;
+                while ((read = img.Read(buffer, 0, buffer.Length)) > 0)
+                {
+
+                    file.Write(buffer, 0, buffer.Length);
+                }
+            }
+        }
+
+        [Fact]
+        public void TestTextExtract()
+        {
+            var imgReader = new ImageReader("images/receiptDark.jpg");
+            var img = ImageReader.Encode(imgReader.GetImageBlackWhite());
+
+            var bytes = new List<byte>();
+            byte[] buffer = new byte[1024 * 64];
+            
+                int read;
+                while ((read = img.Read(buffer, 0, buffer.Length)) > 0)
+                {
+
+                    bytes.AddRange(buffer);
+                }
+
+            var text = OcrProcessor.GetText(bytes.ToArray(), "deu");
+            using (var f = new StreamWriter("images/ocrResultDarkDeu.txt"))
+            {
+                f.WriteLine(text);
+            }
         }
     }
 }

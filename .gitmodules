@@ -1,0 +1,3 @@
+[submodule "ImageSharp-Tiff"]
+	path = ImageSharp-Tiff
+	url = https://github.com/ChrisVanDijk/ImageSharp-Tiff.git

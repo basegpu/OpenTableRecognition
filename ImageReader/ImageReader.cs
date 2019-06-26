@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using BitMiracle.LibTiff.Classic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
@@ -108,5 +109,52 @@ namespace OpenTableRecognition
         //    }
         //    return result;
         //}
+
+        public static MemoryStream Encode(Image<Rgba32> image)
+        {
+            var tempFilePath = System.IO.Path.GetTempFileName();
+            using (var tif = BitMiracle.LibTiff.Classic.Tiff.Open(tempFilePath, "w"))
+            {
+                var width = image.Width;
+                var height = image.Height;
+
+                tif.SetField(TiffTag.IMAGEWIDTH, width);
+                tif.SetField(TiffTag.IMAGELENGTH, height);
+                tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
+                tif.SetField(TiffTag.PHOTOMETRIC, Photometric.RGB);
+
+                tif.SetField(TiffTag.ROWSPERSTRIP, image.Height);
+
+                tif.SetField(TiffTag.XRESOLUTION, image.MetaData.HorizontalResolution);
+                tif.SetField(TiffTag.YRESOLUTION, image.MetaData.VerticalResolution);
+
+                tif.SetField(TiffTag.BITSPERSAMPLE, 8);
+                tif.SetField(TiffTag.SAMPLESPERPIXEL, 4);
+
+                tif.SetField(TiffTag.PLANARCONFIG, PlanarConfig.CONTIG);
+
+                byte[] color_ptr = new byte[width * 4];
+                for (int rows = 0; rows < height; rows++)
+                {
+                    var pixelRow = image.GetPixelRowSpan(rows);
+                    for (var col = 0; col < width; col++)
+                    {
+                        var pixel = pixelRow[col];
+                        
+                        color_ptr[col * 4 + 0] = pixel.R;
+                        color_ptr[col * 4 + 1] = pixel.G;
+                        color_ptr[col * 4 + 2] = pixel.B;
+                        color_ptr[col * 4 + 3] = pixel.A;
+                    }
+                    tif.WriteScanline(color_ptr, rows, 0);
+                }
+
+                tif.FlushData();
+
+            }
+            var memStream = new MemoryStream(File.ReadAllBytes(tempFilePath));
+            File.Delete(tempFilePath);
+            return memStream;
+        }
     }
 }

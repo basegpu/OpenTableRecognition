@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetapp", "dotnetapp\dotn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageProcessor", "ImageProcessor\ImageProcessor.csproj", "{28266629-F87E-43FD-B626-52F5936DA014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableExtractor", "TableExtractor\TableExtractor.csproj", "{4B89DDCF-EDD1-4CE8-AA5F-3D4B8BBB2599}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{619ABBD4-8B77-4B9F-A347-42B76CC12EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28266629-F87E-43FD-B626-52F5936DA014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28266629-F87E-43FD-B626-52F5936DA014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28266629-F87E-43FD-B626-52F5936DA014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28266629-F87E-43FD-B626-52F5936DA014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B89DDCF-EDD1-4CE8-AA5F-3D4B8BBB2599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B89DDCF-EDD1-4CE8-AA5F-3D4B8BBB2599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B89DDCF-EDD1-4CE8-AA5F-3D4B8BBB2599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B89DDCF-EDD1-4CE8-AA5F-3D4B8BBB2599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

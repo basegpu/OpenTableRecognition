@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using BitMiracle.LibTiff.Classic;
+using OpenCvSharp;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
@@ -11,6 +13,7 @@ namespace OpenTableRecognition
     public class ImageReader : IDisposable
     {
         private readonly string _path;
+        private Mat _image;
 
         public ImageReader(string path)
         {
@@ -23,7 +26,16 @@ namespace OpenTableRecognition
 
         public void Dispose()
         {
-            
+            _image.Dispose();   
+        }
+
+        public Mat GetImageMat()
+        {
+            if (_image == null)
+            {
+                _image = new Mat(_path, ImreadModes.Grayscale);
+            }
+            return _image;
         }
 
         public Image<Rgba32> GetImage()
@@ -37,7 +49,7 @@ namespace OpenTableRecognition
             img.Mutate(i => i.Grayscale());
             return img;
         }
-
+        
         public Image<Rgba32> GetImageBlackWhite()
         {
             var img = GetImage();
